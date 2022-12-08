@@ -1,6 +1,7 @@
 import { useEffect,useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import  './signup.css'
+// import  './signup.css'
+import classes from './signup.module.css'
 
 const Signup = () =>{
     const nameRef = useRef()
@@ -40,14 +41,14 @@ const Signup = () =>{
      }
  }
     return(
-        <div className="signup1">
+        <div className={classes.signup1}>
              
-            <div className="all">
+            <div className={classes.all}>
 
                 <div className="form">
-                <img className="image" src='https://ferasjobeir.com/frontend-app/static/media/logo.1bb8db420e540d66b7c4a6a8350ca833.svg'></img>
-                <h1 className="acc">Create Account</h1>
-                    <div className="signup">
+                <img className={classes.image} src='https://ferasjobeir.com/frontend-app/static/media/logo.1bb8db420e540d66b7c4a6a8350ca833.svg'></img>
+                <h1 className={classes.acc}>Create Account</h1>
+                    <div className={classes.signup}>
                     <label htmlFor='name' className='name'>Name</label>
                         <input  ref={nameRef} type="text" name="name" className='name'/>
                         <label htmlFor='Email' className='email'>Email Adress</label>
@@ -57,9 +58,9 @@ const Signup = () =>{
                         <label htmlFor='password_confermation' className='passwordconf'>Password confirmation</label>
                         <input  ref={passwordConfirmationRef} type="password" name="name" className='passwordconf'/>
                         {/* <input  ref={passwordRef} type="text" name="name" className='password'/> */}
-                        <div className="buttonss">
-                        <input type="button" value="login"  ></input>
-                         <input type="button" value="Register" className="reg" onClick={register}></input>
+                        <div className={classes.buttonss}>
+                        <input type="button" value="Login" className={classes.log} onClick={()=>navigate('/signin')}></input>
+                         <input type="button" value="Register" className={classes.reg} onClick={register}></input>
                          </div>
                     </div>
                 </div>

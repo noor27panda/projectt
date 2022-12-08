@@ -3,12 +3,18 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signin from './pages/signin/Signin';
+import Nav from './pages/nav/Nav';
+import Profile from './pages/profile/Profile';
 
+import Signout from './pages/signin/Signout.js/Signout';
 function App() {
   return (
   <Routes>
  <Route path='/Signup' element={<Signup/>}></Route>
  <Route path='/Signin' element={<Signin/>}></Route>
+ <Route path='/' element={<Nav/>}></Route>
+ <Route path='/signout' element={<Signout/>}></Route>
+ <Route path='/profile' element={<Profile/>}></Route>
  </Routes>
   );
 }
