@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import Nav from "../nav/Nav"
@@ -7,10 +7,12 @@ import './profile.css'
 const Profile = () =>{
     const { user, token } = useContext(AuthContext)
     const [data, setUserData] = useState(user)
+    const fileRef = useRef()
     const updateProfile = async(e) =>{
+
         e.preventDefault()
-        
-        const form = e.target
+        console.log(fileRef.current.files[0])
+         const form = e.target
         const newData = new FormData(form)
         console.log(form.method)
         for(var key of newData.keys()){
@@ -28,6 +30,7 @@ const Profile = () =>{
     const json = await response.json()
     console.log(json)
     }
+   
     return(
         <>
         <Nav/>
@@ -39,15 +42,21 @@ const Profile = () =>{
                 <div className='header2'>
                     My Information
                     </div>
-                    <Gravatar class name='imagepand' email="noorpro@icloud.com" size={150} style={{
+                    <input ref={fileRef} type={'file'} style={{
+                        display: 'none'
+                    }} />
+                   
+                     <Gravatar
+                    onClick={()=> fileRef.current.click()} 
+                    clasName='imagepand' email="noorpro@icloud.com" size={150} style={{
                         borderRadius: '80px',
-                        marginLeft: 240
-
+                        marginLeft: 240,
                         
                     }}/>
                     
                     <div className="form1">
                     <form onSubmit={updateProfile}>
+                    
                     <label htmlFor="name" >Name <span style={{ color: 'red' }}>*</span></label>
                     <input required="required"  id = 'name' type='text' name='name' value={data.name} onChange={(e) =>{
                         setUserData({

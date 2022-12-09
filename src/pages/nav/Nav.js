@@ -68,7 +68,7 @@ const Nav = () => {
         <nav className="navbar">
         <img className="image"src="https://ferasjobeir.com/frontend-app/static/media/logo.1bb8db420e540d66b7c4a6a8350ca833.svg"/>
         <ul className="iconsandwords">
-          <span><HomeIcon/><li onClick={()=>navigate('/')}>Home</li></span>
+          <span><HomeIcon/><li onClick={()=>navigate('/Home')}>Home</li></span>
           <span><EmailIcon/><li onClick={()=>navigate('/somewhere')}>Messages</li></span>
           <span><BookmarkIcon/><li onClick={()=>navigate('/somewhere')} >Bookmarks</li></span>
           <span><ExploreIcon/><li onClick={()=>navigate('/somewhere')}>Explore</li></span>
