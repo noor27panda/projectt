@@ -12,9 +12,7 @@ const Signout = () =>{
         },2000)
     },[])
     return(
-        <h3 classname="text-center my-5"> 
-        Looking Forward to see you again!
-        </h3>
+        <p></p>
 
     )
 }
