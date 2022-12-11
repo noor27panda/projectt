@@ -3,10 +3,11 @@ import { lazy, useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 import classes from './home.module.css'
 import { useRef } from "react"
-import dayjs from "dayjs"
+import moment from "moment/moment"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import Gravatar from "react-gravatar"
+import { PostAdd } from "@mui/icons-material"
 const Home =() =>{
     const { token } = useContext(AuthContext)
     const [posts, setPosts] = useState([])
@@ -45,17 +46,21 @@ const Home =() =>{
                     
                     clasName={classes.imagepand} email="noorpro@icloud.com" size={60} style={{
                         borderRadius: '80px',
+                        marginLeft: '4px',
+                     
                         
                         
                     }}/>
-                       <input className={classes.buttontype} type='text'></input> 
+                       <input className={classes.buttontype} type='text'placeholder="what is happening?"></input> 
                        <input className={classes.create} type='button' value='create post'></input>    
                         </div>
                     </div>
         <div >
             {   
-               posts?.length > 0 &&  posts.map((post, i) => {        
-                    return (
+               posts?.length > 0 &&  posts.map((post, i) => { 
+                 const er = post.created_at
+                // console.log(er)
+                return (
                         <>
                 
                         <div className={classes.post} key={i}>
@@ -63,7 +68,7 @@ const Home =() =>{
                             <img src={post.user.avatar}></img>
                             <div className={classes.writings}>
                                 <h3>{post.user.name}</h3>
-                                <h6>time</h6>
+                                <h6>{moment(er).startOf('hh').fromNow() }</h6>
                             <p>{post.content}</p>
                             <div className={classes.iconandcomm}>
                             <span className={classes.heart}><FavoriteBorderIcon/><input type='button' value={post.likes_count}  ></input></span>

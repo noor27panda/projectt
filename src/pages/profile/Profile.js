@@ -3,11 +3,15 @@ import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import Nav from "../nav/Nav"
 import Gravatar from 'react-gravatar'
+
 import './profile.css'
 const Profile = () =>{
     const { user, token } = useContext(AuthContext)
     const [data, setUserData] = useState(user)
+    const [mypost, setMypost] = useState(user)
     const fileRef = useRef()
+
+   
     const updateProfile = async(e) =>{
 
         e.preventDefault()
@@ -29,8 +33,21 @@ const Profile = () =>{
         })
     const json = await response.json()
     console.log(json)
+    
     }
-   
+    const update = async(e) =>{
+    const res = await fetch('http://ferasjobeir.com/api/users/me', {
+        method: 'GET',
+        
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+const json1 = await res.json()
+console.log(json1)
+setMypost([json1.data.posts[0].content])
+    }
+   update()
     return(
         <>
         <Nav/>
@@ -42,21 +59,14 @@ const Profile = () =>{
                 <div className='header2'>
                     My Information
                     </div>
+                   
+                    <div className="form1">
+                    <form onSubmit={updateProfile}>
                     <input ref={fileRef} type={'file'} style={{
                         display: 'none'
                     }} />
-                   
-                     <Gravatar
-                    onClick={()=> fileRef.current.click()} 
-                    clasName='imagepand' email="noorpro@icloud.com" size={150} style={{
-                        borderRadius: '80px',
-                        marginLeft: 240,
-                        
-                    }}/>
-                    
-                    <div className="form1">
-                    <form onSubmit={updateProfile}>
-                    
+                    <img className="imgpd" onClick={()=> fileRef.current.click()} src={data.avatar}></img>
+                   <br/>
                     <label htmlFor="name" >Name <span style={{ color: 'red' }}>*</span></label>
                     <input required="required"  id = 'name' type='text' name='name' value={data.name} onChange={(e) =>{
                         setUserData({
@@ -97,9 +107,21 @@ const Profile = () =>{
                     <button className="btn" type='submit'> update profile </button>
                     </form>
                 </div>
-            </div>
+                </div>
                </div>
-               </>
+               <div>
+                {
+                     mypost?.length > 0 &&  mypost.map((myposts, i) => {
+                        return(
+                            <h1>{myposts}</h1>
+                        )
+
+                })
+            }
+               </div>
+              
+              
+       </>
         )
-}
+            }
 export default Profile
