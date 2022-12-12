@@ -107,6 +107,11 @@
         margin-top: 10px ;
         
     }
+    .imagepnd{
+        border-radius: 50%;
+        width:5rem;
+        margin: 10px;
+    }
     .writings{
         height: 150px;
         display: flex;

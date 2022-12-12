@@ -2,13 +2,13 @@ import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import Nav from "../nav/Nav"
-import Gravatar from 'react-gravatar'
-
 import './profile.css'
 const Profile = () =>{
     const { user, token } = useContext(AuthContext)
     const [data, setUserData] = useState(user)
-    const [mypost, setMypost] = useState(user)
+    const [myposts, setMypost] = useState([])
+    const [mydel, setmydel] = useState([])
+
     const fileRef = useRef()
 
    
@@ -35,6 +35,7 @@ const Profile = () =>{
     console.log(json)
     
     }
+    
     const update = async(e) =>{
     const res = await fetch('http://ferasjobeir.com/api/users/me', {
         method: 'GET',
@@ -45,9 +46,27 @@ const Profile = () =>{
     })
 const json1 = await res.json()
 console.log(json1)
-setMypost([json1.data.posts[0].content])
+setMypost(json1.data.posts)
     }
-   update()
+   useEffect(()=>{update()},[])
+
+   const vardelete = async (mydel) => {
+    const del = await fetch(`http://ferasjobeir.com/api/posts/${mydel}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+const json2 = await del.json()
+console.log(json2)
+if(json2.success){
+    const newPost = [...myposts]
+    const index = newPost.findIndex(post => post.id == mydel)
+    newPost.splice(index, 1)
+    setMypost(newPost)
+}
+}
+// useEffect(()=>{vardelete()},[])
     return(
         <>
         <Nav/>
@@ -65,7 +84,7 @@ setMypost([json1.data.posts[0].content])
                     <input ref={fileRef} type={'file'} style={{
                         display: 'none'
                     }} />
-                    <img className="imgpd" onClick={()=> fileRef.current.click()} src={data.avatar}></img>
+                    <div className="imageee"><img className="imgpd" onClick={()=> fileRef.current.click()} src={data.avatar}></img></div>
                    <br/>
                     <label htmlFor="name" >Name <span style={{ color: 'red' }}>*</span></label>
                     <input required="required"  id = 'name' type='text' name='name' value={data.name} onChange={(e) =>{
@@ -107,19 +126,23 @@ setMypost([json1.data.posts[0].content])
                     <button className="btn" type='submit'> update profile </button>
                     </form>
                 </div>
-                </div>
-               </div>
+                <div className='header2'>My Posts</div>
                <div>
-                {
-                     mypost?.length > 0 &&  mypost.map((myposts, i) => {
+               {
+                     myposts?.length > 0 &&  myposts.map((mypost, i) => {
                         return(
-                            <h1>{myposts}</h1>
+                            <div className='mypostsss'>
+                            <label>{mypost.content}</label>
+                            <button  onClick={()=>vardelete(mypost.id)}>Delete</button>
+                            </div>
                         )
 
                 })
             }
                </div>
               
+               </div>
+               </div>
               
        </>
         )

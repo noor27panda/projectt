@@ -46,11 +46,16 @@
    .signup .log{
        background:transparent;
        border:transparent;
+       box-shadow: none;
        text-decoration: underline;
        border: none;
    }
    .log:focus{
     outline: none;
+    border: none;
+   }
+   .log{
+    box-shadow: none;
     border: none;
    }
     

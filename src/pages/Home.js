@@ -9,9 +9,13 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import Gravatar from "react-gravatar"
 import { PostAdd } from "@mui/icons-material"
 const Home =() =>{
-    const { token } = useContext(AuthContext)
+    const {user , token } = useContext(AuthContext)
     const [posts, setPosts] = useState([])
     let [count, setCount] = useState(1)
+    const [data, setUserData] = useState(user)
+
+
+
     let timerRef= useRef()
     useEffect(() => {
         const getPosts = async (count) => {
@@ -42,15 +46,7 @@ const Home =() =>{
             <div className={classes.headers} >
                         <div className={classes.home}><h1>Home</h1></div>
                         <div className={classes.mypost} >
-                        <Gravatar
-                    
-                    clasName={classes.imagepand} email="noorpro@icloud.com" size={60} style={{
-                        borderRadius: '80px',
-                        marginLeft: '4px',
-                     
-                        
-                        
-                    }}/>
+                        <div> <img  className={classes.imagepnd} src={data.avatar} ></img></div>
                        <input className={classes.buttontype} type='text'placeholder="what is happening?"></input> 
                        <input className={classes.create} type='button' value='create post'></input>    
                         </div>

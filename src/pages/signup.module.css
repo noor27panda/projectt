@@ -6,10 +6,8 @@
 /* margin: 20px; */
   align-items:right; 
     gap:10px;
-
  align-self: center;
  
-
 }
 input:focus { 
     border-color: #86b7fe;
@@ -47,6 +45,7 @@ margin-top: 70px;
     background:transparent;
     border:transparent;
     text-decoration: underline;
+    box-shadow: none;
 }
 .image{
     width: 100px;

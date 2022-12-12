@@ -11,7 +11,7 @@ const Signup = () =>{
     const navigate = useNavigate()
  
     const register = async() =>{
-     const name = nameRef.current.value.trim
+     const name = nameRef.current.value.trim()
      const email = emailRef.current.value
      const password = passwordRef.current.value
      const passwordConfirmation = passwordConfirmationRef.current.value
