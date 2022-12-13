@@ -7,16 +7,48 @@ import moment from "moment/moment"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import Gravatar from "react-gravatar"
-import { PostAdd } from "@mui/icons-material"
+import { PostAdd, RawOff } from "@mui/icons-material"
 const Home =() =>{
     const {user , token } = useContext(AuthContext)
     const [posts, setPosts] = useState([])
     let [count, setCount] = useState(1)
     const [data, setUserData] = useState(user)
+    const[mysinglepost, setmysinglepost] = useState({
+        content: ''
+    })
+    const postonclick = (e) =>{
+        mysinglepost[e.target.name]= e.target.value;
+    }
+    const textpartref = useRef()
+    const addpost = async () =>{
+    const respo = await fetch("http://ferasjobeir.com/api/posts", {
+            method: 'post',
+            headers: {
+                'Content-Type': `application/json`,
+                'Authorization': `Bearer ${token}`,
+                
+            },
+            body: JSON.stringify(mysinglepost)
+        })
+    const jsonpost = await respo.json()
+    console.log(jsonpost)
+    if (jsonpost.success){
+        const newData = [jsonpost.data, ...posts]
+        textpartref.current.value = ''
+        setmysinglepost([...newData])
+    }
+    // else{
+    //     alert(jsonpost.messages)
+    // }
+}
+    const sendpost = async (e)=> {
+        await addpost(mysinglepost)
+    }
 
 
 
     let timerRef= useRef()
+     
     useEffect(() => {
         const getPosts = async (count) => {
             const response = await fetch(`http://ferasjobeir.com/api/posts?page=${count}`, {
@@ -30,6 +62,9 @@ const Home =() =>{
             setPosts([...posts,...json.data.data])
         }
         getPosts(count)
+   
+        
+
        
        
     }, [count])
@@ -38,6 +73,10 @@ const Home =() =>{
             setCount(count + 1)
         }
     }
+   
+
+
+    
     
     
    return(
@@ -47,8 +86,8 @@ const Home =() =>{
                         <div className={classes.home}><h1>Home</h1></div>
                         <div className={classes.mypost} >
                         <div> <img  className={classes.imagepnd} src={data.avatar} ></img></div>
-                       <input className={classes.buttontype} type='text'placeholder="what is happening?"></input> 
-                       <input className={classes.create} type='button' value='create post'></input>    
+                       <input className={classes.buttontype} ref={textpartref} onChange={postonclick} type='text' name='content' placeholder="what is happening?"></input> 
+                       <input className={classes.create}  onClick={() =>sendpost()} type='button' value='create post'></input>    
                         </div>
                     </div>
         <div >
@@ -66,8 +105,10 @@ const Home =() =>{
                                 <h3>{post.user.name}</h3>
                                 <h6>{moment(er).startOf('hh').fromNow() }</h6>
                             <p>{post.content}</p>
+                       <label> {}</label>
+
                             <div className={classes.iconandcomm}>
-                            <span className={classes.heart}><FavoriteBorderIcon/><input type='button' value={post.likes_count}  ></input></span>
+                            <span className={classes.heart}><FavoriteBorderIcon/><input type='button' value={post.likes_count}   ></input></span>
                           
                             <span className={classes.heart}><ChatBubbleOutlineIcon/><input type='button' value={post.comments_count}  ></input></span>
                            
@@ -80,7 +121,7 @@ const Home =() =>{
                 
             }
         
-        <div className={classes.button}><input type="buttons" className={classes.button}  value="Load More" onClick={page1 }></input></div>
+        <div className={classes.button}><input type="buttons" className={classes.button}  value="Load More" ></input></div>
         </div>
         
         </>
