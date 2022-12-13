@@ -7,6 +7,7 @@ import classes from "../../pages/home.module.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useEffect, useContext,  } from "react";
 import Comments from "../Comments";
+
 const Post = ({
   id,
   avatar,
@@ -20,7 +21,7 @@ const Post = ({
   
   const Comments = async() =>{
     const { token } = useContext(AuthContext);
-            const respo = await fetch('http://ferasjobeir.com/api/posts/1019', {
+            const respo = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
               method: "get",
               headers: {
                 "Content-Type": `application/json`,
