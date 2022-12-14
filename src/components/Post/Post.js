@@ -18,9 +18,10 @@ const Post = ({
   createdAt,
 }) => {
   const [comentts, setmycomentts] = useState([])
+  const { token } = useContext(AuthContext);
   
-  const Comments = async() =>{
-    const { token } = useContext(AuthContext);
+  const comments = async() =>{
+    setwait(true)
             const respo = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
               method: "get",
               headers: {
@@ -32,14 +33,20 @@ const Post = ({
           
             
           setmycomentts(json.data.comments)
+          setOpen(!open)
+          setwait(false)
            }
-           Comments()
+          //  comments()
+          // useEffect(()=>{comments()},[]) 
           console.log(comentts)
           console.log("hi") 
-          
          
  const [open, setOpen] = useState(false);
+ const [wait, setwait] = useState(false);
 
+ 
+// const ifnotnull () =>
+// {if (comments?.length>0) return(setOpen())}
   return (
     <div className={classes.post} key={id}>
       <img src={avatar}></img>
@@ -49,7 +56,7 @@ const Post = ({
         <p>{content}</p>
 
         <div className={classes.iconandcomm}>
-          <div><span className={classes.heart1}>
+          <div ><span className={classes.heart1}>
             <FavoriteBorderIcon />
             <input type="button" value={likes_count}></input>
           </span>
@@ -57,29 +64,45 @@ const Post = ({
           <div >
             <span    className={classes.heart}>
             <ChatBubbleOutlineIcon />
-            <input type="button"  onClick={() => setOpen(!open)} value={comments_count}></input>
+            <input type="button" disabled={wait} onClick={() => {  
+            comments()} } value={comments_count}></input>
           </span>
           </div>
           </div> 
       
       {open && (
-        <div className={classes.commentpart}
-          style={{
-            height: 200,
-          
-          }}>
-            <p>
+        
+        <div className={classes.fitt}
+          >
+            
+            <p style={{display:'block'}}>
               {comentts?.length>0 &&
               comentts.map((coment,i) =>{
                 return(
-                  <div key={i}>
-                  
-                    <label>{coment.user.name}</label>
+                  <div className={classes.allcomment} key={i}>
+                    <img className={classes.imgcomment} src={coment.user.avatar}></img>
+                    <div className={classes.commentwriting}>
+                    <h2 className={classes.usercomment}>{coment.user.name}</h2>
+                    <h6>{moment(createdAt).startOf("hh").fromNow()}</h6>
+
                     <label>{coment.content}</label>
+                    </div>
                   </div>
+
                 )
               })}
             </p>
+            <div style={{
+              backgroundColor: '#f3f4f5',
+              width: '100%',
+              height:1,
+              margin: '10px 0'
+            }}>
+            </div>
+         <div className={classes.borderrr}>
+          <input className={classes.commentbox} type='text' placeholder="add a new comment"></input>
+          <input className={classes.commentbutton} type='button' value="add"></input>
+          </div>
 
       
         

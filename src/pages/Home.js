@@ -17,6 +17,7 @@ const Home = () => {
   const postonclick = (e) => {
     mysinglepost[e.target.name] = e.target.value;
   };
+  
   const textpartref = useRef();
   const addpost = async () => {
     const respo = await fetch("http://ferasjobeir.com/api/posts", {
