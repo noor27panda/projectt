@@ -3,6 +3,9 @@ import {  useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import classes from "./home.module.css";
 import { useRef } from "react";
+import PersonIcon from '@mui/icons-material/Person';
+import HomeIcon from '@mui/icons-material/Home';
+import LockIcon from '@mui/icons-material/Lock';
 import Post from "../components/Post/Post";
 const Home = () => {
   const { user, token } = useContext(AuthContext);
@@ -73,7 +76,12 @@ const Home = () => {
       <Nav />
       <div className={classes.headers}>
         <div className={classes.home}>
-          <h1>Home</h1>
+          <div><h1>Home</h1></div>
+         <div className={classes.iconshidden1}> 
+         <div className={classes.iconshidden}><LockIcon/></div>
+          <div className={classes.iconshidden} ><PersonIcon/></div>
+          <div className={classes.iconshidden}><HomeIcon/></div>
+          </div>
         </div>
         <div className={classes.mypost}>
           <div>
