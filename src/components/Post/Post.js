@@ -5,7 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import classes from "../../pages/home.module.css";
 import { AuthContext } from "../../context/AuthContext";
-import { useEffect, useContext,  } from "react";
+import { useEffect, useContext, useRef  } from "react";
 import Comments from "../Comments";
 
 const Post = ({
@@ -43,7 +43,41 @@ const Post = ({
          
  const [open, setOpen] = useState(false);
  const [wait, setwait] = useState(false);
+  const [mycomment, setmycomment] = useState({
+    content: "",
+    post_id: id,
+  }); 
+  const postonclick = (e) => {
+    mycomment[e.target.name] = e.target.value;
+  };
+  const textpartref = useRef();
 
+ const addcomment = async() =>{
+ 
+  const respondcomm = await fetch(`http://ferasjobeir.com/api/comments`, {
+    method: "post",
+    headers: {
+      "Content-Type": `application/json`,
+      Authorization: `Bearer ${token}`,
+      
+    },
+    body:(JSON.stringify(mycomment))
+    
+  });
+  const json = await respondcomm.json();
+  console.log(json)
+  if (json.success) {
+    const newData = [json.data, ...comentts];
+    textpartref.current.value = "";
+    setmycomentts(newData);
+  } else {
+    alert(json.messages);
+  }
+};
+console.log(mycomment)
+const sendcomment = async (e) => {
+  await addcomment(mycomment);
+};
  
 // const ifnotnull () =>
 // {if (comments?.length>0) return(setOpen())}
@@ -100,8 +134,8 @@ const Post = ({
             }}>
             </div>
          <div className={classes.borderrr}>
-          <input className={classes.commentbox} type='text' placeholder="add a new comment"></input>
-          <input className={classes.commentbutton} type='button' value="add"></input>
+          <input ref={textpartref} onChange={postonclick} className={classes.commentbox} type='text' name="content" placeholder="add a new comment"></input>
+          <input onClick={() => sendcomment()} className={classes.commentbutton} type='button' value="add"></input>
           </div>
 
       
