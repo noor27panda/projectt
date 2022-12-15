@@ -13,6 +13,7 @@
         width: 49%;
         
     }
+    .
     *:focus {
         outline: 0 !important;
     }
@@ -71,6 +72,7 @@
     gap:4px;
     color:#0d6efd;
     display: none;
+    list-style: none;
  }
     .home{
         width: 100%;

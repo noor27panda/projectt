@@ -126,7 +126,7 @@ const postlike = async () => {
                         id={liked}
                         onClick={()=>postlike(posts.id)}><div className={classes.iconheart}>
 
-                            {likedd?<Favorite style={{ color: 'red' }}/> :<FavoriteBorderIcon />}  
+                            {likedd?<Favorite style={{ color: '#d32f2f' }}/> :<FavoriteBorderIcon />}  
 
                     
                         </div>
@@ -157,7 +157,7 @@ const postlike = async () => {
                     <img className={classes.imgcomment} src={coment.user.avatar}></img>
                     <div className={classes.commentwriting}>
                     <h2 className={classes.usercomment}>{coment.user.name}</h2>
-                    <h6>{moment(createdAt).startOf("hh").fromNow()}</h6>
+                    <h6>{moment(coment.created_at).startOf("hh").fromNow()}</h6>
 
                     <label>{coment.content}</label>
                     </div>

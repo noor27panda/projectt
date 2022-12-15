@@ -5,7 +5,18 @@
     font-family: Poppins,sans-serif;
 } */
 
-
+.tab.active{
+    color: #1da1f2;
+}
+.navadjust{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.tab{
+    text-decoration: none;
+   color: black;
+}
 .navbar{
     display: flex;
     flex-direction: column;

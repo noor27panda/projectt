@@ -10,11 +10,13 @@ import Post from "../components/Post/Post";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
 import { Favorite } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
   const { user, token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [allcomments, setallcomments] = useState([]);
-
+  const navigate = useNavigate()
   let [count, setCount] = useState(1);
   const [data, setUserData] = useState(user);
   const [mysinglepost, setmysinglepost] = useState({
@@ -82,11 +84,11 @@ const Home = () => {
       <div className={classes.headers}>
         <div className={classes.home}>
           <div><h1>Home</h1></div>
-         <div className={classes.iconshidden1}> 
-         <div className={classes.iconshidden}><LockIcon/></div>
-          <div className={classes.iconshidden} ><PersonIcon/></div>
-          <div className={classes.iconshidden}><HomeIcon/></div>
-          </div>
+         <ul className={classes.iconshidden1}> 
+         <li onClick={()=>navigate('/signout')} className={classes.iconshidden}><LockIcon/> </li>
+          <li onClick={()=>navigate('/profile')} className={classes.iconshidden} ><PersonIcon/></li>
+          <li onClick={()=>navigate('/')} className={classes.iconshidden}><HomeIcon/></li>
+          </ul>
         </div>
         <div className={classes.mypost}>
           <div>
