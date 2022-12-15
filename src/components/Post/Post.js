@@ -118,20 +118,21 @@ const postlike = async () => {
         <div className={classes.iconandcomm}>
           <div ><div className={classes.heart1}>
             {/* <FavoriteBorderIcon /> */}
-            <div  value={likes_count}>
+            {/* <div  value={likes_count}>
          
-          </div>
+          </div> */}
           <button className={classes.newheart}
                         type="button"
                         id={liked}
-                        onClick={()=>postlike(posts.id)}><div className={classes.like}><div className={classes.iconheart}>
+                        onClick={()=>postlike(posts.id)}><div className={classes.iconheart}>
 
-                            {likedd?<Favorite/> :<FavoriteBorderIcon />}  
+                            {likedd?<Favorite style={{ color: 'red' }}/> :<FavoriteBorderIcon />}  
 
                     
-                        </div><div>{likes_count}</div>
                         </div>
+                        
                       </button>
+                      <div className={classes.count}>{likes_count}</div>
                       </div>
                       </div>
           <div >

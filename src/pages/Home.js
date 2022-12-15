@@ -126,6 +126,7 @@ const Home = () => {
                 posts = {posts}
                 setPosts = {setPosts} 
                 
+                
               />
              
             );  
