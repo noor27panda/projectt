@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment/moment";
-
+import { Favorite } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import classes from "../../pages/home.module.css";
@@ -16,6 +16,9 @@ const Post = ({
   likes_count,
   comments_count,
   createdAt,
+  posts,
+  likedd,
+  setPosts,
 }) => {
   const [comentts, setmycomentts] = useState([])
   const { token } = useContext(AuthContext);
@@ -78,6 +81,29 @@ console.log(mycomment)
 const sendcomment = async (e) => {
   await addcomment(mycomment);
 };
+const [liked, setliked] = useState(
+  {
+    post_id: id
+  }
+)
+const postlike = async () => {
+  const resp = await fetch(`http://ferasjobeir.com/api/posts/${!likedd ? 'like':'unlike'}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body:(JSON.stringify(liked))
+    
+  });
+  const json = await resp.json();
+  if (json.success) {
+      const newPosts = [...posts]
+      const index = newPosts.findIndex(singlePost => singlePost.id == json.data.id)
+      newPosts[index] = json.data
+      setPosts(newPosts)
+  }
+};
  
 // const ifnotnull () =>
 // {if (comments?.length>0) return(setOpen())}
@@ -90,11 +116,24 @@ const sendcomment = async (e) => {
         <p>{content}</p>
 
         <div className={classes.iconandcomm}>
-          <div ><span className={classes.heart1}>
-            <FavoriteBorderIcon />
-            <input type="button" value={likes_count}></input>
-          </span>
+          <div ><div className={classes.heart1}>
+            {/* <FavoriteBorderIcon /> */}
+            <div  value={likes_count}>
+         
           </div>
+          <button className={classes.newheart}
+                        type="button"
+                        id={liked}
+                        onClick={()=>postlike(posts.id)}><div className={classes.like}><div className={classes.iconheart}>
+
+                            {likedd?<Favorite/> :<FavoriteBorderIcon />}  
+
+                    
+                        </div><div>{likes_count}</div>
+                        </div>
+                      </button>
+                      </div>
+                      </div>
           <div >
             <span    className={classes.heart}>
             <ChatBubbleOutlineIcon />

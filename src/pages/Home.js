@@ -7,6 +7,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 import LockIcon from '@mui/icons-material/Lock';
 import Post from "../components/Post/Post";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
+import { Favorite } from "@mui/icons-material";
 const Home = () => {
   const { user, token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
@@ -44,6 +47,7 @@ const Home = () => {
   const sendpost = async (e) => {
     await addpost(mysinglepost);
   };
+  
 
 
   // let timerRef = useRef();
@@ -70,6 +74,7 @@ const Home = () => {
       setCount(count + 1);
     }
   };
+  
 
   return (
     <>
@@ -108,6 +113,7 @@ const Home = () => {
             const er = post.created_at;
             // console.log(er)
             return (
+        
               <Post
                 id={post.id}
                 avatar={post.user.avatar}
@@ -116,9 +122,15 @@ const Home = () => {
                 likes_count={post.likes_count}
                 comments_count={post.comments_count}
                 createdAt={post.created_at}
+                likedd ={post.liked_by_current_user}
+                posts = {posts}
+                setPosts = {setPosts} 
+                
               />
+             
             );  
           })}
+      
 
         <div className={classes.button}>
           <input

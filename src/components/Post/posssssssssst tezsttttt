@@ -34,7 +34,10 @@ const Post = ({
             setmycomentts(json.data.coment[0])
            }
            Comments() 
-          
+        const [like, setlike]= useState()
+        const Liked = async(id) =>{ const respoo = await fetch (`http://ferasjobeir.com/api/posts/${}`)
+
+        }  
           
           
          
