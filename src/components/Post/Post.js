@@ -87,14 +87,14 @@ const [liked, setliked] = useState(
   }
 )
 const postlike = async () => {
-  const resp = await fetch(`http://ferasjobeir.com/api/posts/${!likedd ? 'like':'unlike'}`, {
+  const resp = await fetch(`http://ferasjobeir.com/api/posts/${likedd ? 'unlike':'like'}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body:(JSON.stringify(liked))
-    
+      
   });
   const json = await resp.json();
   if (json.success) {
@@ -104,7 +104,6 @@ const postlike = async () => {
       setPosts(newPosts)
   }
 };
- 
 // const ifnotnull () =>
 // {if (comments?.length>0) return(setOpen())}
   return (

@@ -33,7 +33,7 @@ const Profile = () =>{
         })
     const json = await response.json()
     console.log(json)
-    
+    // console.log(data)
     }
     
     const update = async(e) =>{
@@ -47,6 +47,7 @@ const Profile = () =>{
 const json1 = await res.json()
 console.log(json1)
 setMypost(json1.data.posts)
+console.log(data)
     }
    useEffect(()=>{update()},[])
 
@@ -64,8 +65,10 @@ if(json2.success){
     const index = newPost.findIndex(post => post.id == mydel)
     newPost.splice(index, 1)
     setMypost(newPost)
+    
 }
 }
+
 // useEffect(()=>{vardelete()},[])
     return(
         <>
@@ -78,13 +81,23 @@ if(json2.success){
                 <div className='header2'>
                     My Information
                     </div>
-                   
+                    
                     <div className="form1">
                     <form onSubmit={updateProfile}>
-                    <input ref={fileRef} type={'file'} style={{
-                        display: 'none'
-                    }} />
-                    <div className="imageee"><img className="imgpd" onClick={()=> fileRef.current.click()} src={data.avatar}></img></div>
+                        <>
+                    <input  ref={fileRef} type={'file'} name="avatar" onChange={(e) =>{
+                        setUserData({
+                            ...data,
+                            avatar: e.target.value
+                        })}} style={{display:'none'}} />
+                    
+                     <div className="imageee"><img className="imgpd" src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img></div>  
+                     </>
+                    {/* <div className="imageee"><img className="imgpd" onClick={()=> fileRef.current.click()} value={data.avatar} src={data.avatar} ></img></div> */}
+                   {/* <img src={user?.avatar}></img>
+                   <>
+                   <input name='avatar' type='file' id='avatar' multiple accept="image/*" onChange={onimagechange}/>
+                   </> */}
                    <br/>
                     <label htmlFor="name" >Name <span style={{ color: 'red' }}>*</span></label>
                     <input required="required"  id = 'name' type='text' name='name' value={data.name} onChange={(e) =>{
