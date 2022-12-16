@@ -127,6 +127,7 @@ const Home = () => {
                 likedd ={post.liked_by_current_user}
                 posts = {posts}
                 setPosts = {setPosts} 
+                mysinglepost = {mysinglepost}
                 
                 
               />

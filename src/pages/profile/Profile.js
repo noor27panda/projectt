@@ -93,11 +93,7 @@ if(json2.success){
                     
                      <div className="imageee"><img className="imgpd" src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img></div>  
                      </>
-                    {/* <div className="imageee"><img className="imgpd" onClick={()=> fileRef.current.click()} value={data.avatar} src={data.avatar} ></img></div> */}
-                   {/* <img src={user?.avatar}></img>
-                   <>
-                   <input name='avatar' type='file' id='avatar' multiple accept="image/*" onChange={onimagechange}/>
-                   </> */}
+                  
                    <br/>
                     <label htmlFor="name" >Name <span style={{ color: 'red' }}>*</span></label>
                     <input required="required"  id = 'name' type='text' name='name' value={data.name} onChange={(e) =>{
