@@ -77,7 +77,6 @@ const Home = () => {
     }
   };
   
-
   return (
     <>
       <Nav />

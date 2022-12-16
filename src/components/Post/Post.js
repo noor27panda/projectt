@@ -99,7 +99,7 @@ const postlike = async () => {
   });
   const json = await resp.json();
   if (json.success) {
-      const newPosts = [...posts,...mysinglepost]
+      const newPosts = [...posts]
       const index = newPosts.findIndex(singlePost => singlePost.id == json.data.id)
       newPosts[index] = json.data
       setPosts(newPosts)
