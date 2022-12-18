@@ -2,13 +2,17 @@ import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import Nav from "../nav/Nav"
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import './profile.css'
+import { Camera } from "@mui/icons-material"
+import { hover } from "@testing-library/user-event/dist/hover";
 const Profile = () =>{
     const { user, token } = useContext(AuthContext)
     const [data, setUserData] = useState(user)
     const [myposts, setMypost] = useState([])
     const [mydel, setmydel] = useState([])
-
+    const navigate = useNavigate()
+ 
     const fileRef = useRef()
 
    
@@ -34,6 +38,12 @@ const Profile = () =>{
     const json = await response.json()
     console.log(json)
     // console.log(data)
+    if (json.success){
+        setTimeout(() => {
+          navigate('/signin')
+        })
+          }
+    
     }
     
     const update = async(e) =>{
@@ -48,7 +58,7 @@ const json1 = await res.json()
 console.log(json1)
 setMypost(json1.data.posts)
 console.log(data)
-    }
+}
    useEffect(()=>{update()},[])
 
    const vardelete = async (mydel) => {
@@ -68,6 +78,7 @@ if(json2.success){
     
 }
 }
+
 
 // useEffect(()=>{vardelete()},[])
     return(
@@ -89,9 +100,11 @@ if(json2.success){
                         setUserData({
                             ...data,
                             avatar: e.target.value
-                        })}} style={{display:'none'}} />
+                        })}} style={{display:'none',
+                       
+                       }}  />
                     
-                     <div className="imageee"><img className="imgpd" src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img></div>  
+                     <div className="imageee" ><div className="icon"><CameraAltIcon className="iconcamera" /></div><img className="imgpd"  src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img> </div>  
                      </>
                   
                    <br/>
