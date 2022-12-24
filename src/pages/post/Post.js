@@ -3,10 +3,10 @@ import moment from "moment/moment";
 import { Favorite } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import classes from "../../pages/home.module.css";
+
 import { AuthContext } from "../../context/AuthContext";
-import { useEffect, useContext, useRef  } from "react";
-import Comments from "../Comments";
+import { useContext, useRef  } from "react";
+import classes from './home.module.css'
 
 const Post = ({
   id,
@@ -14,12 +14,12 @@ const Post = ({
   name,
   content,
   likes_count,
-  comments_count,
+  commentcount,
   createdAt,
   posts,
   likedd,
   setPosts,
-  mysinglepost,
+  setcounterc,
 }) => {
   const [comentts, setmycomentts] = useState([])
   const { token } = useContext(AuthContext);
@@ -40,9 +40,9 @@ const Post = ({
           setOpen(!open)
           setwait(false)
            }
-          //  comments()
-          // useEffect(()=>{comments()},[]) 
+        
           console.log(comentts)
+          
           console.log("hi") 
          
  const [open, setOpen] = useState(false);
@@ -71,9 +71,12 @@ const Post = ({
   const json = await respondcomm.json();
   console.log(json)
   if (json.success) {
+    
     const newData = [json.data, ...comentts];
     textpartref.current.value = "";
     setmycomentts(newData);
+    setcounterc(comentts.length)
+    console.log(commentcount)
   } else {
     alert(json.messages);
   }
@@ -88,7 +91,7 @@ const [liked, setliked] = useState(
   }
 )
 const postlike = async () => {
-  const resp = await fetch(`http://ferasjobeir.com/api/posts/${likedd ? 'unlike':'like'}`, {
+  const resp = await fetch(`http://ferasjobeir.com/api/posts/${likedd? 'unlike':'like'}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -105,10 +108,9 @@ const postlike = async () => {
       setPosts(newPosts)
   }
 };
-// const ifnotnull () =>
-// {if (comments?.length>0) return(setOpen())}
+
   return (
-    <div className={classes.post} key={id}>
+    <div className={classes.singlepost} key={id}>
       <img src={avatar}></img>
       <div className={classes.writings}>
         <h3>{name}</h3>
@@ -117,10 +119,7 @@ const postlike = async () => {
 
         <div className={classes.iconandcomm}>
           <div ><div className={classes.heart1}>
-            {/* <FavoriteBorderIcon /> */}
-            {/* <div  value={likes_count}>
-         
-          </div> */}
+            
           <button className={classes.newheart}
                         type="button"
                         id={liked}
@@ -139,7 +138,7 @@ const postlike = async () => {
             <span    className={classes.heart}>
             <ChatBubbleOutlineIcon />
             <input type="button" disabled={wait} onClick={() => {  
-            comments()} } value={comments_count}></input>
+            comments()} } value={commentcount}></input>
           </span>
           </div>
           </div> 
@@ -175,7 +174,7 @@ const postlike = async () => {
             </div>
          <div className={classes.borderrr}>
           <input ref={textpartref} onChange={postonclick} className={classes.commentbox} type='text' name="content" placeholder="add a new comment"></input>
-          <input onClick={() => sendcomment()} className={classes.commentbutton} type='button' value="add"></input>
+          <input onClick={() => sendcomment()} className={classes.commentbutton} type='button' value="add"    ></input>
           </div>
 
       

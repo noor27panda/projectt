@@ -1,23 +1,16 @@
-import Nav from "./nav/Nav";
+
 import {  useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import classes from "./home.module.css";
 import { useRef } from "react";
-import PersonIcon from '@mui/icons-material/Person';
-import HomeIcon from '@mui/icons-material/Home';
-import LockIcon from '@mui/icons-material/Lock';
-import Post from "../components/Post/Post";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
-import { Favorite } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
+import Post from "../post/Post";
+import Wrapper from '../../components/wrapper/Wrapper'
 const Home = () => {
   const { user, token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
-  const [allcomments, setallcomments] = useState([]);
-  const navigate = useNavigate()
   let [count, setCount] = useState(1);
+  const [counterc, setcounterc] = useState()
   const [data, setUserData] = useState(user);
   const [mysinglepost, setmysinglepost] = useState({
     content: "",
@@ -68,6 +61,7 @@ const Home = () => {
       const json = await response.json();
       console.log(json);
       setPosts([...posts,...json.data.data]);
+      setcounterc(posts.comments_count)
     };
     getPosts(count);
   }, [count]);
@@ -75,22 +69,16 @@ const Home = () => {
     if (count <= 100) {
       setCount(count + 1);
     }
+
   };
   
   return (
-    <>
-      <Nav />
+      <Wrapper title='Home'>
+      
       <div className={classes.headers}>
-        <div className={classes.home}>
-          <div><h1>Home</h1></div>
-         <ul className={classes.iconshidden1}> 
-         <li onClick={()=>navigate('/signout')} className={classes.iconshidden}><LockIcon/> </li>
-          <li onClick={()=>navigate('/profile')} className={classes.iconshidden} ><PersonIcon/></li>
-          <li onClick={()=>navigate('/')} className={classes.iconshidden}><HomeIcon/></li>
-          </ul>
-        </div>
+        
         <div className={classes.mypost}>
-          <div>
+          <div >
             {" "}
             <img className={classes.imagepnd} src={data.avatar}></img>
           </div>
@@ -100,6 +88,7 @@ const Home = () => {
             onChange={postonclick}
             type="text"
             name="content"
+            style={{border: 'none'}}
             placeholder="what is happening?"></input>
           <input
             className={classes.create}
@@ -108,11 +97,11 @@ const Home = () => {
             value="create post"></input>
         </div>
       </div>
-      <div>
+      <div className={classes.singlepost}>
         {posts?.length > 0 &&
           posts.map((post, i) => {
             const er = post.created_at;
-            // console.log(er)
+            
             return (
         
               <Post
@@ -121,13 +110,14 @@ const Home = () => {
                 name={post.user.name}
                 content={post.content}
                 likes_count={post.likes_count}
-                comments_count={post.comments_count}
+                commentcount={post.comments_count}
                 createdAt={post.created_at}
                 likedd ={post.liked_by_current_user}
                 posts = {posts}
                 setPosts = {setPosts} 
                 mysinglepost = {mysinglepost}
-                
+                setcounterc = {setcounterc}
+                counterc={counterc}
                 
               />
              
@@ -143,7 +133,8 @@ const Home = () => {
             value="Load More"></input>
         </div>
       </div>
-    </>
+      </Wrapper>
+  
   );
 };
 export default Home;

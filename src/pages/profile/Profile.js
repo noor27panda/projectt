@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
-import Nav from "../nav/Nav"
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import './profile.css'
-import { Camera } from "@mui/icons-material"
-import { hover } from "@testing-library/user-event/dist/hover";
+import Wrapper from '../../components/wrapper/Wrapper'
+
 const Profile = () =>{
     const { user, token } = useContext(AuthContext)
     const [data, setUserData] = useState(user)
@@ -83,12 +82,12 @@ if(json2.success){
 // useEffect(()=>{vardelete()},[])
     return(
         <>
-        <Nav/>
+    <Wrapper title='Profile'>
         <div className='all'>
-            <div >
-                <div className="header">
+            <div  >
+                {/* <div className="header">
                 <h2>Profile</h2>
-                </div>
+                </div> */}
                 <div className='header2'>
                     My Information
                     </div>
@@ -104,7 +103,7 @@ if(json2.success){
                        
                        }}  />
                     
-                     <div className="imageee" ><div className="icon"><CameraAltIcon className="iconcamera" /></div><img className="imgpd"  src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img> </div>  
+                     <div className="imageee" ><div className="icon"><CameraAltIcon style={{color:'white'}}className="iconcamera" /></div><img className="imgpd"  src={data.avatar} value={data.avatar} onClick={()=> fileRef.current.click()}></img> </div>  
                      </>
                   
                    <br/>
@@ -155,7 +154,7 @@ if(json2.success){
                         return(
                             <div className='mypostsss'>
                             <label>{mypost.content}</label>
-                            <button  onClick={()=>vardelete(mypost.id)}>Delete</button>
+                            <button  onClick={()=>vardelete(mypost.id) (window.confirm('Are you sure you wish to delete this item?'))}>Delete</button>
                             </div>
                         )
 
@@ -165,7 +164,7 @@ if(json2.success){
               
                </div>
                </div>
-              
+               </Wrapper>
        </>
         )
             }
